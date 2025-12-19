@@ -1,0 +1,33 @@
+@reference "tailwindcss";
+
+.common {
+  @apply relative border-b border-gray-500 transition-colors;
+}
+
+.common:focus-within {
+  @apply border-b-black outline-none;
+}
+
+.common > label {
+  @apply block;
+}
+
+.common > label > span {
+  @apply text-sm uppercase text-gray-500 block;
+}
+
+.field {
+  @apply text-left mb-9;
+}
+
+.field > label > input {
+  @apply outline-none bg-transparent text-shadow-blue-200 w-full px-0 m-0;
+}
+
+.field > label > input:focus {
+  @apply ring-0;
+}
+
+.error {
+  @apply absolute  left-0 text-sm w-full text-red-500;
+}

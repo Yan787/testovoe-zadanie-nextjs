@@ -1,0 +1,25 @@
+{
+  "useTabs": false,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "semi": true,
+  "arrowParens": "always",
+  "bracketSpacing": false,
+  "printWidth": 100,
+  "endOfLine": "lf",
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "~/pages",
+    "^~/widgets",
+    "^~/features",
+    "^~/entities",
+    "^~/shared",
+    "^@ui/",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderGroupNamespaceSpecifiers": true,
+  "importOrderCaseInsensitive": true
+}
