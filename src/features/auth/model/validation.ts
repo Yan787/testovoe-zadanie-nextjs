@@ -18,7 +18,7 @@ export const COUNTRY_VALIDATION = z
 export const CITY_VALIDATION = z
   .string()
   .nonempty('Введите пожалуйста город')
-  .min(2, 'Поле страна должно содержать как минимум 2 символа')
+  .min(2, 'Поле город должно содержать как минимум 2 символа')
   .regex(CITY_RULE, 'Город должно содержать только буквы, дефис или пробел');
 
 export const EMAIL_VALIDATION = z
