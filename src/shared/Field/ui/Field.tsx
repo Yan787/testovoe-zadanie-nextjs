@@ -6,7 +6,7 @@ import cn from 'classnames';
 
 export function Field({
   placeholder,
-  type,
+  type = 'text',
   error,
   ...props
 }: React.ComponentProps<'input'> & IField) {
