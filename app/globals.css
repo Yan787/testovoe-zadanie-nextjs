@@ -1,0 +1,30 @@
+:root {
+  color-scheme: light;
+  background: #f6f8f7;
+  color: #172922;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  max-width: 68rem;
+  margin-inline: auto;
+  padding: clamp(2rem, 10vw, 8rem) 1.5rem;
+}
+
+h1 {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  letter-spacing: -0.05em;
+  line-height: 1.02;
+}
+
+p {
+  margin-block: 1.25rem 0;
+  color: #43554d;
+  line-height: 1.6;
+}
