@@ -1,6 +1,7 @@
 /node_modules/
 /.next/
 /out/
+/.local-postgres/
 .env*
 !.env.example
 *.tsbuildinfo

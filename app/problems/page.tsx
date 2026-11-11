@@ -1,8 +1,12 @@
 import Link from "next/link";
-import { problems } from "@/lib/problems";
+import { listProblems } from "@/lib/problems";
 import { ProblemSearch } from "./problem-search";
 
-export default function ProblemsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function ProblemsPage() {
+  const problems = await listProblems();
+
   return (
     <main>
       <h1>Вопросы</h1>

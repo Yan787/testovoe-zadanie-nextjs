@@ -1,29 +1,61 @@
-export const problems = [
-  {
-    slug: "react-use-ref",
-    title: "Для чего нужен useRef в React?",
-    topic: "React",
-    difficulty: "Базовый",
-    question: "Какую задачу решает useRef в React? Что происходит при изменении ref.current?",
-    answer:
-      "useRef возвращает один и тот же объект между рендерами. В его свойстве current можно хранить ссылку на DOM-элемент, идентификатор таймера или другое значение, которое нужно сохранить между рендерами. Изменение current не запускает новый рендер. Для данных, от которых зависит интерфейс, используйте состояние.",
-  },
-  {
-    slug: "javascript-closures",
-    title: "Как работают замыкания?",
-    topic: "JavaScript",
-    difficulty: "Средний",
-    question: "Почему функция сохраняет доступ к переменным внешней функции после завершения её вызова?",
-    answer:
-      "Функция сохраняет доступ к лексическому окружению, в котором была создана. Например, если внешняя функция создаёт переменную count и возвращает функцию, увеличивающую count, каждый вызов возвращённой функции продолжит работать с этой переменной. Новый вызов внешней функции создаст отдельную переменную count.",
-  },
-  {
-    slug: "css-box-sizing",
-    title: "Что меняет box-sizing?",
-    topic: "CSS",
-    difficulty: "Базовый",
-    question: "Как box-sizing влияет на ширину элемента с заданными width, padding и border?",
-    answer:
-      "При content-box свойство width задаёт ширину области содержимого. Padding и border добавляются сверху. При border-box они входят в заданную ширину. Например, при width: 200px, padding: 10px и border: 2px общая ширина будет 224px для content-box и 200px для border-box.",
-  },
-];
+import { getDb } from "./db";
+
+type ProblemSummary = {
+  slug: string;
+  title: string;
+  topic: string;
+  difficulty: string;
+};
+
+type Problem = ProblemSummary & {
+  question: string;
+  answer: string;
+};
+
+export async function listProblemSlugs() {
+  const { rows } = await getDb().query<{ slug: string }>(
+    "SELECT slug FROM problems ORDER BY slug",
+  );
+  return rows;
+}
+
+export async function listProblems() {
+  const { rows } = await getDb().query<ProblemSummary>(
+    "SELECT slug, title, topic, difficulty FROM problems ORDER BY slug",
+  );
+  return rows;
+}
+
+export async function getProblem(slug: string) {
+  const { rows } = await getDb().query<Problem>(
+    "SELECT slug, title, topic, difficulty, question, answer FROM problems WHERE slug = $1",
+    [slug],
+  );
+  return rows[0];
+}
+
+export async function searchProblems(query: string) {
+  const { rows } = await getDb().query<Pick<Problem, "slug" | "title">>(
+    "SELECT slug, title FROM problems WHERE strpos(lower(title), lower($1)) > 0 ORDER BY slug LIMIT 5",
+    [query],
+  );
+  return rows;
+}
+
+export async function updateProblemRecord(
+  slug: string,
+  { title, question, answer }: Pick<Problem, "title" | "question" | "answer">,
+) {
+  const { rows } = await getDb().query<{ title_changed: boolean }>(
+    `WITH previous AS (
+      SELECT slug, title FROM problems WHERE slug = $1 FOR UPDATE
+    )
+    UPDATE problems AS problem
+    SET title = $2, question = $3, answer = $4
+    FROM previous
+    WHERE problem.slug = previous.slug
+    RETURNING previous.title IS DISTINCT FROM problem.title AS title_changed`,
+    [slug, title, question, answer],
+  );
+  return rows[0];
+}

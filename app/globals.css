@@ -160,3 +160,30 @@ p {
 .problem-search a {
   color: #195940;
 }
+
+.problem-edit-form {
+  max-width: 44rem;
+  margin-top: 1.5rem;
+}
+
+.problem-edit-form label {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.problem-edit-form input,
+.problem-edit-form textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid #a4b8ac;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  font-weight: 400;
+}
+
+.problem-edit-form textarea {
+  resize: vertical;
+}

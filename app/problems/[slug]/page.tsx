@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { problems } from "@/lib/problems";
+import { getProblem, listProblemSlugs } from "@/lib/problems";
 import { RevealAnswer } from "./reveal-answer";
+
+export const dynamic = "force-static";
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+  return listProblemSlugs();
+}
 
 export default async function ProblemPage({
   params,
@@ -9,7 +16,7 @@ export default async function ProblemPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const problem = problems.find((item) => item.slug === slug);
+  const problem = await getProblem(slug);
 
   if (!problem) {
     notFound();
