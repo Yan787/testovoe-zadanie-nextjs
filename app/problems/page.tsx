@@ -8,7 +8,7 @@ export default async function ProblemsPage() {
   const problems = await listProblems();
 
   return (
-    <main>
+    <main className="catalog">
       <h1>Вопросы</h1>
       <ProblemSearch />
       <ul className="problem-list">
