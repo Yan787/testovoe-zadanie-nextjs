@@ -32,11 +32,17 @@ export async function updateProblem(slug: string, _previous: string, formData: F
     return "Заполните все поля. Заголовок должен содержать до 200 символов, вопрос и ответ — до 10 000.";
   }
 
-  const updated = await updateProblemRecord(slug, { title, question, answer });
+  let updated;
+  try {
+    updated = await updateProblemRecord(slug, { title, question, answer });
+  } catch (error) {
+    console.error("Failed to update problem", error);
+    return "Не удалось сохранить изменения. Попробуйте ещё раз.";
+  }
   if (!updated) return "Вопрос больше не существует.";
 
   const path = `/problems/${encodeURIComponent(slug)}`;
   revalidatePath(path);
   if (updated.title_changed) revalidatePath("/problems");
-  redirect(path);
+  redirect(`${path}?saved=1`);
 }

@@ -1,10 +1,25 @@
 import { getDb } from "./db";
 
 export async function getProgress(userId: string) {
-  const { rows: [stats] } = await getDb().query<{ completed: number; total: number }>(
-    `SELECT
-       (SELECT count(*)::int FROM problem_progress WHERE user_id = $1) AS completed,
-       (SELECT count(*)::int FROM problems) AS total`,
+  const { rows: [stats] } = await getDb().query<{
+    completed: number;
+    total: number;
+    problems: { slug: string; title: string; topic: string; difficulty: string }[];
+  }>(
+    `WITH completed_problems AS (
+       SELECT problem.slug, problem.title, problem.topic, problem.difficulty
+       FROM problem_progress AS progress
+       JOIN problems AS problem ON problem.slug = progress.problem_slug
+       WHERE progress.user_id = $1
+     )
+     SELECT
+       count(*)::int AS completed,
+       (SELECT count(*)::int FROM problems) AS total,
+       COALESCE(
+         jsonb_agg(completed_problems ORDER BY title, slug),
+         '[]'::jsonb
+       ) AS problems
+     FROM completed_problems`,
     [userId],
   );
   return stats;

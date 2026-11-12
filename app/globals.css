@@ -349,3 +349,235 @@ a {
   color: var(--foreground);
   font-weight: 600;
 }
+
+.catalog-skeleton {
+  display: grid;
+  gap: 0.625rem;
+  margin-top: 1.5rem;
+}
+
+.skeleton-search,
+.skeleton-title,
+.skeleton-meta {
+  border-radius: 0.375rem;
+  background: var(--surface);
+}
+
+.skeleton-search {
+  height: 3rem;
+  margin-bottom: 1rem;
+}
+
+.skeleton-card {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.skeleton-title {
+  width: 70%;
+  height: 1.25rem;
+}
+
+.skeleton-meta {
+  width: 35%;
+  height: 0.875rem;
+}
+
+.success-notice {
+  padding: 0.875rem 1rem;
+  border: 1px solid #27683d;
+  border-radius: var(--radius);
+  background: #102b1b;
+  color: #a1e9b6;
+}
+
+.problem-edit-form [role="alert"] {
+  color: #ffb4b4;
+}
+
+
+body {
+  isolation: isolate;
+}
+
+.site-header,
+body > main {
+  position: relative;
+}
+
+.site-header {
+  background: #0a0a0aed;
+}
+
+.circuit-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background-image:
+    linear-gradient(#ffffff09 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff09 1px, transparent 1px);
+  background-position: center top;
+  background-size: 44px 44px;
+  mask-image: linear-gradient(transparent, #000 12%, #000 86%, transparent);
+}
+
+.circuit-frame {
+  position: absolute;
+  inset: 14% max(1rem, calc((100vw - 72rem) / 2)) 8%;
+  border: 1px solid #ffffff0d;
+  border-radius: 20px;
+}
+
+.circuit-pulse {
+  position: absolute;
+  width: 90px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #0070f3 75%, #8ac8ff);
+  box-shadow: 0 0 14px #0070f355;
+  offset-path: inset(0 round 20px);
+  offset-anchor: right center;
+  animation: circuit-travel 18s linear infinite;
+}
+
+.circuit-pulse-second {
+  animation-delay: -9s;
+}
+
+
+.problem,
+.problem-link,
+.problem-search ul,
+.problem-edit-form,
+.answer {
+  background-color: #0a0a0aee;
+}
+
+.problem-edit-form {
+  padding: clamp(1rem, 3vw, 1.75rem);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+}
+
+@keyframes circuit-travel {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
+}
+
+
+@media (max-width: 600px) {
+  .circuit-background {
+    background-size: 32px 32px;
+  }
+
+  .circuit-pulse {
+    width: 48px;
+    animation-duration: 18s;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circuit-pulse {
+    display: none;
+    animation: none;
+  }
+
+}
+
+.completed-problems {
+  margin-top: 1.5rem;
+}
+
+.completed-problems h2 {
+  margin: 1.75rem 0 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.completed-problems .problem-list {
+  margin-top: 1rem;
+}
+
+.progress-summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.progress-summary .progress-count {
+  margin: 0;
+}
+
+.progress-percentage {
+  color: #52a8ff;
+  font-size: 1.125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-bar {
+  display: block;
+  width: 100%;
+  height: 0.625rem;
+  overflow: hidden;
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface);
+  color: #0070f3;
+}
+
+.progress-bar::-webkit-progress-bar {
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.progress-bar::-webkit-progress-value {
+  border-radius: 999px;
+  background: linear-gradient(90deg, #0070f3, #52a8ff);
+}
+
+.progress-bar::-moz-progress-bar {
+  border-radius: 999px;
+  background: linear-gradient(90deg, #0070f3, #52a8ff);
+}
+
+.completed-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #0a0a0aee;
+}
+
+.completed-row .problem-link {
+  flex: 1 1 15rem;
+  min-width: 0;
+  padding: 0.25rem;
+  border-color: transparent;
+  background: transparent;
+}
+
+.edit-problem-link {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.edit-problem-link:hover {
+  background: var(--surface);
+}

@@ -38,11 +38,19 @@ export async function startAdminSession(candidate: FormDataEntryValue | null) {
   }
 
   const expires = String(Date.now() + sessionSeconds * 1000);
-  (await cookies()).set(cookieName, `${expires}.${sign(expires, password)}`, {
+  const cookieStore = await cookies();
+  cookieStore.set(cookieName, "", {
     httpOnly: true,
     secure: true,
     sameSite: "lax",
     path: "/admin",
+    maxAge: 0,
+  });
+  cookieStore.set(cookieName, `${expires}.${sign(expires, password)}`, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
+    path: "/",
     maxAge: sessionSeconds,
   });
   return true;

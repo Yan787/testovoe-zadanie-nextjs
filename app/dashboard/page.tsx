@@ -17,7 +17,9 @@ export default async function DashboardPage() {
         <ProgressStats userId={session.user.id} />
       </Suspense>
       <div className="form-actions">
-        <Link className="action" href="/problems">К вопросам</Link>
+        <Link className="action" href="/problems">
+          К вопросам
+        </Link>
         <SignOut />
       </div>
     </main>

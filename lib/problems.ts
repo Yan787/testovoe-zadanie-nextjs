@@ -1,4 +1,5 @@
 import { getDb } from "./db";
+import { cache } from "react";
 
 type ProblemSummary = {
   slug: string;
@@ -26,13 +27,13 @@ export async function listProblems() {
   return rows;
 }
 
-export async function getProblem(slug: string) {
+export const getProblem = cache(async (slug: string) => {
   const { rows } = await getDb().query<Problem>(
     "SELECT slug, title, topic, difficulty, question, answer FROM problems WHERE slug = $1",
     [slug],
   );
   return rows[0];
-}
+});
 
 export async function searchProblems(query: string) {
   const { rows } = await getDb().query<Pick<Problem, "slug" | "title">>(
